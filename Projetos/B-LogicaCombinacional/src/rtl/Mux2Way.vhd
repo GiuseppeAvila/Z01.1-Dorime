@@ -12,5 +12,6 @@ end entity;
 architecture arch of Mux2Way is
 begin
 
+q <= a when(sel = '1') else b;
 
 end architecture;
