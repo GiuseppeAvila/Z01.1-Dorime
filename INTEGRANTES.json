@@ -1,13 +1,13 @@
 {
   "aluno-1": {
+    "nome": "Fernando Giuseppe Avila Beltramo",
+    "email-insper": "fernandogab@al.insper.edu.br",
+    "user-github": "GiuseppeAvila"
+  },
+  "aluno-2": {
     "nome": "Rafael Henrique Belini Zanfolin",
     "email-insper": "rafaelhbz@al.insper.edu.br",
     "user-github": "rafaelhbz"
-  },
-  "aluno-2": {
-    "nome": "",
-    "email-insper": "",
-    "user-github": ""
   },
   "aluno-3": {
     "nome": "",
