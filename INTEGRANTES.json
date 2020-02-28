@@ -1,18 +1,18 @@
 {
   "aluno-1": {
+    "nome": "Fernando Giuseppe Avila Beltramo",
+    "email-insper": "fernandogab@al.insper.edu.br",
+    "user-github": "GiuseppeAvila"
+  },
+  "aluno-2": {
+    "nome": "Rafael Henrique Belini Zanfolin",
+    "email-insper": "rafaelhbz@al.insper.edu.br",
+    "user-github": "rafaelhbz"
+  },
+  "aluno-3": {
     "nome": "Caroline Chaim de Lima Carneiro",
     "email-insper": "carolineclc@al.insper.edu.br",
     "user-github": "carolinechaim"
-  },
-  "aluno-2": {
-    "nome": "",
-    "email-insper": "",
-    "user-github": ""
-  },
-  "aluno-3": {
-    "nome": "",
-    "email-insper": "",
-    "user-github": ""
   },
   "aluno-4": {
     "nome": "",
