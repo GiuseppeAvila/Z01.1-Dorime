@@ -12,11 +12,11 @@ end entity;
 architecture rtl of DMux2Way is
 begin
 
-if (sel = '0') then
-q0 <= a;
-else
-q1 <= a;
-end if;
+q0 <= a when sel = '0' else
+      '0';
 
-end process;
+q1 <= a when sel = '1' else
+      '0';
+
+
 end architecture;
