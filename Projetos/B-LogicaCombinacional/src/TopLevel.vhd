@@ -38,6 +38,12 @@ architecture rtl of TopLevel is
 -- implementacao
 ---------------
 begin
-          
-
+   u1 : work.binarioToBcd port map(clk   => CLOCK_50,
+                                   reset => '0',
+                                   binary_in => SW,
+                                   bcd0  => LEDR(3 downto 0),
+                                   bcd1  => LEDR(7 downto 4),
+                                   bcd2  => open,
+                                   bcd3  => open,
+                                   bcd4  => open);
 end rtl;
