@@ -40,6 +40,6 @@ architecture rtl of TopLevel is
 ---------------
 begin
 
+  LEDR(0) <= SW(0);
 
-       
 end rtl;
