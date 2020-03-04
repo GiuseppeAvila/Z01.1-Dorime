@@ -11,6 +11,4 @@ architecture arch of detectorDeMoedas is
 
 begin
 
-
-
 end architecture;
