@@ -14,7 +14,8 @@ end entity;
 architecture arch of Mux4Way16 is
 begin
 q <= a when (sel = "00");
-q <= b when (sel = "01");
-q <= c when (sel ="10");
+q <= b when (sel = "10");
+q <= c when (sel = "01");
 q <= d when (sel = "11");
+
 end architecture;
