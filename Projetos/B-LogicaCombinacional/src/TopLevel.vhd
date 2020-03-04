@@ -21,7 +21,8 @@ entity TopLevel is
 	port(
 		CLOCK_50 : in  std_logic;
 		SW       : in  std_logic_vector(9 downto 0);
-		LEDR     : out std_logic_vector(9 downto 0)
+		LEDR     : out std_logic_vector(9 downto 0);
+		HEX0 		: out std_logic_vector (6 downto 0)
 	);
 end entity;
 
@@ -38,12 +39,7 @@ architecture rtl of TopLevel is
 -- implementacao
 ---------------
 begin
-   u1 : work.binarioToBcd port map(clk   => CLOCK_50,
-                                   reset => '0',
-                                   binary_in => SW,
-                                   bcd0  => LEDR(3 downto 0),
-                                   bcd1  => LEDR(7 downto 4),
-                                   bcd2  => open,
-                                   bcd3  => open,
-                                   bcd4  => open);
+
+  LEDR(0) <= SW(0);
+
 end rtl;
