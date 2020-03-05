@@ -45,8 +45,6 @@ signal C : STD_LOGIC_VECTOR(3 downto 0);
 -- implementacao
 ---------------
 
-begin
-
    u1 : work.binarioToBcd port map(clk   => CLOCK_50,
                                    reset => '0',
                                    binary_in => SW,
@@ -63,4 +61,5 @@ begin
 										 leds1 => HEX1(6 downto 0),
 										 leds2 => HEX2(6 downto 0)
 										 );
+
 end rtl;
