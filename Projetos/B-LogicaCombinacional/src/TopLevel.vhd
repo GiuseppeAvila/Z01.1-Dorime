@@ -44,6 +44,7 @@ signal C : STD_LOGIC_VECTOR(3 downto 0);
 ---------------
 -- implementacao
 ---------------
+begin
 
    u1 : work.binarioToBcd port map(clk   => CLOCK_50,
                                    reset => '0',
