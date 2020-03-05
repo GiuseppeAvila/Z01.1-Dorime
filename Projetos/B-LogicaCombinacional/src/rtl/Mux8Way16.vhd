@@ -17,6 +17,15 @@ end entity;
 
 architecture arch of Mux8Way16 is
 begin
-
+with sel select
+   q <= a when "000",
+	 b when "001",
+	 c when "011",
+	 d when "111",
+	 e when "100",
+	 f when "110",
+	 g when "010",
+	 h when "101",
+	 "0000000000000000" when others;
 
 end architecture;
