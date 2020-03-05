@@ -535,6 +535,7 @@ set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 	# -------------------------
 
 # end ENTITY(TopLevel)
+set_global_assignment -name VHDL_FILE ../src/rtl/sevenSeg.vhd
 set_global_assignment -name VHDL_FILE ../src/rtl/binarioToBcd.vhd
 set_global_assignment -name VHDL_FILE ../src/TopLevel.vhd
 set_global_assignment -name VHDL_FILE ../src/rtl/Or16.vhd
