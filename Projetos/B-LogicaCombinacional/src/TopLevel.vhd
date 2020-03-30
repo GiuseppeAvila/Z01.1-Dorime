@@ -24,7 +24,7 @@ entity TopLevel is
         HEX0    : out std_logic_vector(6 downto 0);
 		  HEX1    : out std_logic_vector(6 downto 0);
 		  HEX2    : out std_logic_vector(6 downto 0);
-        LEDR    : out std_logic_vector(9 downto 0)
+		  HEX3    : out std_logic_vector(6 downto 0)
     );
 	 
 	
@@ -41,6 +41,7 @@ architecture rtl of TopLevel is
 signal A : STD_LOGIC_VECTOR(3 downto 0);
 signal B : STD_LOGIC_VECTOR(3 downto 0);
 signal C : STD_LOGIC_VECTOR(3 downto 0);
+signal D : STD_LOGIC_VECTOR(3 downto 0);
 ---------------
 -- implementacao
 ---------------
@@ -52,15 +53,17 @@ begin
                                    bcd0  => A,
 											  bcd1 => B,
 											  bcd2 => C,
-											  bcd3 => open,
+											  bcd3 => D,
 											  bcd4 => open);
 											  
 	u2 : work.sevenSeg port map(bcd0 => A,
 										 bcd1 => B,
 										 bcd2 => C,
+										 bcd3 => D,
 										 leds0 => HEX0(6 downto 0),
 										 leds1 => HEX1(6 downto 0),
-										 leds2 => HEX2(6 downto 0)
+										 leds2 => HEX2(6 downto 0),
+										 leds3 => HEX3(6 downto 0)
 										 );
 
 end rtl;
