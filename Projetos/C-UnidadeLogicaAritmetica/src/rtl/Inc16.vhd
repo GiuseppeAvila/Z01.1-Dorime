@@ -20,6 +20,9 @@ architecture rtl of Inc16 is
   -- e componentes (outros módulos) que serao
   -- utilizados nesse modulo.
 
+  signal asignal: STD_LOGIC_VECTOR(15 downto 0);
+  signal qsignal: STD_LOGIC_VECTOR(15 downto 0);
+
   component Add16 is
     port(
       a   :  in STD_LOGIC_VECTOR(15 downto 0);
@@ -29,7 +32,11 @@ architecture rtl of Inc16 is
   end component;
 
 begin
-  -- Implementação vem aqui!  process(a)
-  
+asignal <= a;
+u1: Add16 port map  (a => asignal,
+						  b => "0000000000000001",
+						  q => qsignal);
+						  
+q <= qsignal;
 
 end architecture;

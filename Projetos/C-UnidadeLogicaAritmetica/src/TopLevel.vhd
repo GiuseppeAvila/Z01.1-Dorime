@@ -15,7 +15,8 @@ use ieee.numeric_std.all;
 
 ----------------------------
 -- Entrada e saidas do bloco
-----------------------------t
+
+----------------------------
 entity TopLevel is
 	port(
 		SW      : in  std_logic_vector(9 downto 0);
