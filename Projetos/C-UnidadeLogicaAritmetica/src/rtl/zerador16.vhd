@@ -18,7 +18,7 @@ architecture rtl of zerador16 is
   -- e componentes (outros módulos) que serao
   -- utilizados nesse modulo.
 
-  
+
 begin
   -- Implementação vem aqui!
 

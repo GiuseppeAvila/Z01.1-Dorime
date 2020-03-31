@@ -16,10 +16,11 @@ end entity;
 
 architecture rtl of HalfAdder is
   -- Aqui declaramos sinais (fios auxiliares)
-  -- e componentes (outros módulos) que serao
-  -- utilizados nesse modulo.
+  -- e componentes (outros módulos) que serao utilizadas nesse modulo
 
 begin
   -- Implementação vem aqui!
-
+  soma <= a xor b;
+  vaium <= a and b;
+ 
 end architecture;
