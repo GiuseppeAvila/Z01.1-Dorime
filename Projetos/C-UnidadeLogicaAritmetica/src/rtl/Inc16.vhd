@@ -19,6 +19,7 @@ architecture rtl of Inc16 is
   -- Aqui declaramos sinais (fios auxiliares)
   -- e componentes (outros módulos) que serao
   -- utilizados nesse modulo.
+
   signal asignal: STD_LOGIC_VECTOR(15 downto 0);
   signal qsignal: STD_LOGIC_VECTOR(15 downto 0);
 
@@ -31,7 +32,7 @@ architecture rtl of Inc16 is
   end component;
 
 begin
-
+asignal <= a;
 u1: Add16 port map  (a => asignal,
 						  b => "0000000000000001",
 						  q => qsignal);
