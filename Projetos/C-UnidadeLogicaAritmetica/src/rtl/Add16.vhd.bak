@@ -20,10 +20,6 @@ architecture rtl of Add16 is
   -- Aqui declaramos sinais (fios auxiliares)
   -- e componentes (outros módulos) que serao
   -- utilizados nesse modulo.
-signal carry : STD_LOGIC_VECTOR(15 downto 0);
-signal asignal: STD_LOGIC_VECTOR(15 downto 0);
-signal qsignal: STD_LOGIC_VECTOR(15 downto 0);
-signal bsignal: STD_LOGIC_VECTOR(15 downto 0);
 
   component FullAdder is
     port(
@@ -31,154 +27,151 @@ signal bsignal: STD_LOGIC_VECTOR(15 downto 0);
       soma,vaium: out STD_LOGIC   -- sum e carry
     );
   end component;
-
+signal carry : STD_LOGIC_VECTOR(15 downto 0);
 begin
-asignal <= a;
-bsignal <= b;
   -- Implementação vem aqui!
     ad0: FullAdder 
     port map(
-       a => asignal(0),
-       b => bsignal(0),
+       a => a(0),
+       b => b(0),
        c => '0',
-       soma => qsignal(0),
+       soma => q(0),
        vaium => carry(0)
     );
 
     ad1: FullAdder 
     port map(
-       a => asignal(1),
-       b => bsignal(1),
+       a => a(1),
+       b => b(1),
        c => carry(0),
-       soma => qsignal(1),
+       soma => q(1),
        vaium => carry(1)
     );
 
     ad2: FullAdder 
     port map(
-       a => asignal(2),
-       b => bsignal(2),
+       a => a(2),
+       b => b(2),
        c => carry(1),
-       soma => qsignal(2),
+       soma => q(2),
        vaium => carry(2)
     );
 
     ad3: FullAdder 
     port map(
-       a => asignal(3),
-       b => bsignal(3),
+       a => a(3),
+       b => b(3),
        c => carry(2),
-       soma => qsignal(3),
+       soma => q(3),
        vaium => carry(3)
     );
 
     ad4: FullAdder 
     port map(
-       a => asignal(4),
-       b => bsignal(4),
+       a => a(4),
+       b => b(4),
        c => carry(3),
-       soma => qsignal(4),
+       soma => q(4),
        vaium => carry(4)
     );
     
     ad5: FullAdder 
     port map(
-       a => asignal(5),
-       b => bsignal(5),
+       a => a(5),
+       b => b(5),
        c => carry(4),
-       soma => qsignal(5),
+       soma => q(5),
        vaium => carry(5)
     );
 
     ad6: FullAdder 
     port map(
-       a => asignal(6),
-       b => bsignal(6),
+       a => a(6),
+       b => b(6),
        c => carry(5),
-       soma => qsignal(6),
+       soma => q(6),
        vaium => carry(6)
     );
 
     ad7: FullAdder 
     port map(
-       a => asignal(7),
-       b => bsignal(7),
+       a => a(7),
+       b => b(7),
        c => carry(6),
-       soma => qsignal(7),
+       soma => q(7),
        vaium => carry(7)
     );
 
     ad8: FullAdder 
     port map(
-       a => asignal(8),
-       b => bsignal(8),
+       a => a(8),
+       b => b(8),
        c => carry(7),
-       soma => qsignal(8),
+       soma => q(8),
        vaium => carry(8)
     );
 
     ad9: FullAdder 
     port map(
-       a => asignal(9),
-       b => bsignal(9),
+       a => a(9),
+       b => b(9),
        c => carry(8),
-       soma => qsignal(9),
+       soma => q(9),
        vaium => carry(9)
     );
 
     ad10: FullAdder 
     port map(
-       a => asignal(10),
-       b => bsignal(10),
+       a => a(10),
+       b => b(10),
        c => carry(9),
-       soma => qsignal(10),
+       soma => q(10),
        vaium => carry(10)
     );
 
     ad11: FullAdder 
     port map(
-       a => asignal(11),
-       b => bsignal(11),
+       a => a(11),
+       b => b(11),
        c => carry(10),
-       soma => qsignal(11),
+       soma => q(11),
        vaium => carry(11)
     );
 
     ad12: FullAdder 
     port map(
-       a => asignal(12),
-       b => bsignal(12),
+       a => a(12),
+       b => b(12),
        c => carry(11),
-       soma => qsignal(12),
+       soma => q(12),
        vaium => carry(12)
     );
 
     ad13: FullAdder 
     port map(
-       a => asignal(13),
-       b => bsignal(13),
+       a => a(13),
+       b => b(13),
        c => carry(12),
-       soma => qsignal(13),
-       vaium => carry(13)
+       soma => q(12),
+       vaium => carry(12)
     );
 
     ad14: FullAdder 
     port map(
-       a => asignal(14),
-       b => bsignal(14),
+       a => a(14),
+       b => b(14),
        c => carry(13),
-       soma => qsignal(14),
+       soma => q(14),
        vaium => carry(14)
     );
 
     ad15: FullAdder 
     port map(
-       a => asignal(15),
-       b => bsignal(15),
+       a => a(15),
+       b => b(15),
        c => carry(14),
-       soma => qsignal(15),
+       soma => q(15),
        vaium => carry(15)
     );
-q <= qsignal;
 
 end architecture;
