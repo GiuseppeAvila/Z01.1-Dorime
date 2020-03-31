@@ -29,6 +29,7 @@ architecture rtl of Inc16 is
   end component;
 
 begin
-  -- Implementação vem aqui!
+ q[0] <= '1' while(a[0] = '0') else '0';
+ q[1] <= '1' while(a[1] = '1' and q[0] = 0) or while(a[1] = 
 
 end architecture;
