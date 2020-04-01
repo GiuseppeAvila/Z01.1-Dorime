@@ -12,7 +12,8 @@ entity Add16 is
 	port(
 		a   :  in STD_LOGIC_VECTOR(15 downto 0);
 		b   :  in STD_LOGIC_VECTOR(15 downto 0);
-		q   : out STD_LOGIC_VECTOR(15 downto 0)
+      q   : out STD_LOGIC_VECTOR(15 downto 0);
+      carryout : out std_logic
 	);
 end entity;
 
@@ -179,7 +180,7 @@ bsignal <= b;
        b => bsignal(15),
        c => carry(14),
        soma => qsignal(15),
-       vaium => carry(15)
+       vaium => carryout
     );
 q <= qsignal;
 
