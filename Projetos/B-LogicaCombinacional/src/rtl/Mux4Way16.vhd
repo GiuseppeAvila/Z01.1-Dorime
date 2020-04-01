@@ -17,6 +17,5 @@ with sel select
    q <= a when "00",
 	 b when "01",
 	 c when "11",
-	 d when "10",
-	 "0000000000000000" when others;
+	 d when others;
 end architecture;
