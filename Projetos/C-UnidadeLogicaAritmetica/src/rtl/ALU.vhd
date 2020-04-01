@@ -1,6 +1,7 @@
 -- Elementos de Sistemas
 -- by Luciano Soares
 -- ALU.vhd
+-- teste git
 
 -- Unidade Lógica Aritmética (ULA)
 -- Recebe dois valores de 16bits e
@@ -64,7 +65,8 @@ architecture  rtl OF alu is
 		port(
 			a   :  in STD_LOGIC_VECTOR(15 downto 0);
 			b   :  in STD_LOGIC_VECTOR(15 downto 0);
-			q   : out STD_LOGIC_VECTOR(15 downto 0)
+			q   : out STD_LOGIC_VECTOR(15 downto 0);
+			carryout : out std_logic
 		);
 	end component;
 
@@ -103,7 +105,7 @@ architecture  rtl OF alu is
 		);
 	end component;
 
-   SIGNAL zxout,zyout,nxout,nyout,andout,adderout,xorout,muxout,precomp,dmuxout: std_logic_vector(15 downto 0);
+   SIGNAL zxout,zyout,nxout,nyout,andout,adderout,xorout,muxout,precomp,dmuxout, carrout: std_logic_vector(15 downto 0);
 
 begin
   -- Implementação vem aqui!
