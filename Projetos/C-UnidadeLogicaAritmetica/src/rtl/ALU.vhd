@@ -93,7 +93,15 @@ architecture  rtl OF alu is
 		);
 	end component;
 
-   SIGNAL zxout,zyout,nxout,nyout,andout,adderout,muxout,precomp: std_logic_vector(15 downto 0);
+	component xor16 is
+		port (
+			a:   in  STD_LOGIC_VECTOR(15 downto 0);
+			b:   in  STD_LOGIC_VECTOR(15 downto 0);
+			q:   out STD_LOGIC_VECTOR(15 downto 0)
+		);
+	end component;
+
+   SIGNAL zxout,zyout,nxout,nyout,andout,adderout,xorout,muxout,precomp: std_logic_vector(15 downto 0);
 
 begin
   -- Implementação vem aqui!
@@ -114,5 +122,7 @@ begin
   saida <= precomp;
   
   u9 : comparador16 port map (a => precomp, zr => zr, ng => ng);
+
+  u10 : xor16 port map (a => nxout, b => nyout, q => xorout);
 
 end architecture;
