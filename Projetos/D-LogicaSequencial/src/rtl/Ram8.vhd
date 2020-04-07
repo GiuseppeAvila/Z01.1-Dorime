@@ -84,8 +84,7 @@ begin
 		sel => address,
 		q => output
 	);
-	
-		
+			
 	R0: Register16 port map(
 		clock => clock,
 		input => input,
