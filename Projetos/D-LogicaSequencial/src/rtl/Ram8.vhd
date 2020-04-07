@@ -58,10 +58,8 @@ architecture arch of Ram8 is
 	signal output0, output1, output2, output3, output4, output5, output6, output7 : STD_LOGIC_VECTOR(15 downto 0);
 
 begin
-
---- Mappings
 	
-	inloads: DMux8Way port map(
+	DMX: DMux8Way port map(
 		a => load,
 		sel => address,
 		q0 => load0,
@@ -74,64 +72,7 @@ begin
 		q7 => load7
 	);
 	
-	
-	R1: Register16 port map(
-		clock => clock,
-		input => input,
-		load => load0,
-		output => output0
-	);
-	
-	R2: Register16 port map(
-		clock => clock,
-		input => input,
-		load => load1,
-		output => output1
-	);
-	
-	R3: Register16 port map(
-		clock => clock,
-		input => input,
-		load => load2,
-		output => output2
-	);
-	
-	R4: Register16 port map(
-		clock => clock,
-		input => input,
-		load => load3,
-		output => output3
-	);
-	
-	R5: Register16 port map(
-		clock => clock,
-		input => input,
-		load => load4,
-		output => output4
-	);
-	
-	R6: Register16 port map(
-		clock => clock,
-		input => input,
-		load => load5,
-		output => output5
-	);
-	
-	R7: Register16 port map(
-		clock => clock,
-		input => input,
-		load => load6,
-		output => output6
-	);
-	
-	R8: Register16 port map(
-		clock => clock,
-		input => input,
-		load => load7,
-		output => output7
-	);
-	
-	outputs: Mux8Way16 port map(
+	MX: Mux8Way16 port map(
 		a => output0,
 		b => output1,
 		c => output2,
@@ -142,6 +83,63 @@ begin
 		h => output7,
 		sel => address,
 		q => output
+	);
+	
+		
+	R0: Register16 port map(
+		clock => clock,
+		input => input,
+		load => load0,
+		output => output0
+	);
+	
+	R1: Register16 port map(
+		clock => clock,
+		input => input,
+		load => load1,
+		output => output1
+	);
+	
+	R2: Register16 port map(
+		clock => clock,
+		input => input,
+		load => load2,
+		output => output2
+	);
+	
+	R3: Register16 port map(
+		clock => clock,
+		input => input,
+		load => load3,
+		output => output3
+	);
+	
+	R4: Register16 port map(
+		clock => clock,
+		input => input,
+		load => load4,
+		output => output4
+	);
+	
+	R5: Register16 port map(
+		clock => clock,
+		input => input,
+		load => load5,
+		output => output5
+	);
+	
+	R6: Register16 port map(
+		clock => clock,
+		input => input,
+		load => load6,
+		output => output6
+	);
+	
+	R7: Register16 port map(
+		clock => clock,
+		input => input,
+		load => load7,
+		output => output7
 	);
 	
 
