@@ -39,6 +39,7 @@ architecture arch of BinaryDigit is
 begin
 
 u1 : Mux2Way port map (
+
 								sel => load, 
 								a => dffout , 
 								b=> input, 
@@ -52,5 +53,6 @@ u2 : FlipFlopD port map (
 								d => muxout);
 
 output <= dffout;
+
 
 end architecture;
