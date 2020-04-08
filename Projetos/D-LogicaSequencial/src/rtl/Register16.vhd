@@ -34,6 +34,7 @@ clocksignal <= clock;
 inputsignal <= input;
 loadsignal <= load;
 
+
 		r0: Register8
 		port map(
 			clock => clocksignal,
@@ -50,4 +51,5 @@ loadsignal <= load;
 			output => outputsignal(15 downto 8)
 		);
 output <= outputsignal;
+
 end architecture;
