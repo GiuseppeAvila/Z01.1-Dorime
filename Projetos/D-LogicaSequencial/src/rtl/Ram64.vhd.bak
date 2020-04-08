@@ -1,28 +1,28 @@
 -- Elementos de Sistemas
 -- by Luciano Soares
--- Ram512.vhd
+-- Ram64.vhd
 
 Library ieee;
 use ieee.std_logic_1164.all;
 
-entity Ram512 is
+entity Ram64 is
 	port(
 		clock:   in  STD_LOGIC;
 		input:   in  STD_LOGIC_VECTOR(15 downto 0);
 		load:    in  STD_LOGIC;
-		address: in  STD_LOGIC_VECTOR( 8 downto 0);
+		address: in  STD_LOGIC_VECTOR( 5 downto 0);
 		output:  out STD_LOGIC_VECTOR(15 downto 0)
 	);
 end entity;
 
-architecture arch of Ram512 is
+architecture arch of Ram64 is
 
-	component Ram64 is
+	component Ram8 is
 		port(
 			clock:   in  STD_LOGIC;
 			input:   in  STD_LOGIC_VECTOR(15 downto 0);
 			load:    in  STD_LOGIC;
-			address: in  STD_LOGIC_VECTOR( 5 downto 0);
+			address: in  STD_LOGIC_VECTOR( 2 downto 0);
 			output:  out STD_LOGIC_VECTOR(15 downto 0)
 		);
 	end component;
@@ -59,8 +59,6 @@ architecture arch of Ram512 is
 	signal output0, output1, output2, output3, output4, output5, output6, output7 : STD_LOGIC_VECTOR(15 downto 0);
 
 begin
-
-
 
 
 end architecture;

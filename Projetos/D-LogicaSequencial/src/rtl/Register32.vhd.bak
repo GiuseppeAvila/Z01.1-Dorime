@@ -28,5 +28,4 @@ architecture arch of Register32 is
 begin
 
 
-
 end architecture;

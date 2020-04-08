@@ -17,7 +17,7 @@ end entity;
 
 architecture arch of Ram8 is
 
-	component Register16 is
+	component Register16 
 		port(
 			clock:   in  STD_LOGIC;
 			input:   in  STD_LOGIC_VECTOR(15 downto 0);
@@ -58,6 +58,8 @@ architecture arch of Ram8 is
 	signal output0, output1, output2, output3, output4, output5, output6, output7 : STD_LOGIC_VECTOR(15 downto 0);
 
 begin
+
+
 
 
 end architecture;

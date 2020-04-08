@@ -61,6 +61,4 @@ architecture arch of Ram512 is
 begin
 
 
-
-
 end architecture;
