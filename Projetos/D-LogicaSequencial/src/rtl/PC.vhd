@@ -47,4 +47,6 @@ architecture arch of PC is
 begin
 
 
+
+
 end architecture;
