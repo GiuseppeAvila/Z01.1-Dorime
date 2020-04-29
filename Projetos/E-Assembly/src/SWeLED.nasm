@@ -8,4 +8,17 @@
 ; Mesma questão da prova
 
 
+leaw $992, %A
+movw %A, %D
+leaw $21184, %A
+movw %D, (%A)
+leaw $ELSE, %A
+jg %D
+nop
+leaw $1020, %A
+movw %A, %D
+leaw %21184, %A
+movw %D, (%A)
 
+
+ELSE:
