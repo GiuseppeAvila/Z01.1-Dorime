@@ -42,7 +42,7 @@ nop
 
 ; else <--- se não, é adicionado +1 ao contador de resultado
 leaw $R4, %A
-addw $1, (%A), %D ;
+addw $1, (%A), %D
 movw %D, (%A) 
 leaw $while, %A ; <--- se chegou a essa parte a divisão não foi concluída e volta para mais uma iteração
 jmp 

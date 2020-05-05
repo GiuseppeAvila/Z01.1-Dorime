@@ -8,36 +8,35 @@
 ;
 ; 4  % 3 = 1
 ; 10 % 7 = 3
-
-leaw $2, %A
-movw (%A), %D
  
 while:
  
-leaw $5, %A
-movw %D, (%A)
+leaw $R2, %A
+movw %D, (%A) ; <--- joga o valor que estava em %D (será o resto/resultado da última subtração) para a RAM[2]
  
-leaw $1, %A
-movw (%A), %D
+leaw $R1, %A
+movw (%A), %D ; <--- copia o valor que está na RAM[1] e armazena em %D
  
-leaw $1, %A
-subw (%A), %D, %D
+leaw $R0, %A
+subw (%A), %D, %D ; <--- subtrai o que está na RAM[0] pelo que está em %D (RAM[1]) e armazena em %D
  
-leaw $1, %A
-movw %D, (%A)
+leaw $R0, %A
+movw %D, (%A) ; <--- pega o resultado da subtração e armazena na RAM[0]
  
 leaw $end, %A
-je %D
+je %D ; <--- se o resultado em %D for zero significa que acabou
 nop
-jle %D
+leaw $endneg, %A
+jl %D ; <--- se o resultado em %D for menor que zero significa que acabou
 nop
  
 leaw $while, %A
-jmp
+jmp ; <--- else, a iteração é feita novamente
 nop
  
 end:
-leaw $5, %A
-movw (%A), %D
-leaw $0, %A
-movw %D, (%A)
+leaw $R2, %A
+movw %D, (%A) ; <--- atualiza o resto para RAM[2]
+
+endneg:
+; resto não é atualizado e o programa finaliza
