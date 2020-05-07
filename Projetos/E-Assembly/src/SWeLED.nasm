@@ -8,17 +8,16 @@
 ; Mesma questão da prova
 
 
-leaw $992, %A
-movw %A, %D
+leaw $21185, %A
+movw (%A), %D
+notw %D
+leaw $14, %A
+andw %D, %A, %D
+leaw $4, %A
+movw %D, (%A)
+leaw $496, %A
+addw %A, %D, %D
+leaw $4, %A
+or (%A), %D, %D
 leaw $21184, %A
 movw %D, (%A)
-leaw $ELSE, %A
-jg %D
-nop
-leaw $1020, %A
-movw %A, %D
-leaw %21184, %A
-movw %D, (%A)
-
-
-ELSE:
