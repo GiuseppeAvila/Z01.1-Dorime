@@ -20,4 +20,30 @@
 ;  RAM[14] = a
 ; 
 
- 
+leaw $10, %A
+movw (%A), %D
+leaw $14, %A
+subw (%A), %D, %D
+leaw $else, %A
+jne
+nop
+
+leaw $11, %A
+movw (%A), %D
+leaw $13, %A
+subw (%A), %D, %D
+leaw $else, %A
+jne
+nop
+
+leaw $0, %A
+movw $1, (%A)
+leaw $end, %A
+jmp
+nop
+
+else:
+leaw $0, %A
+movw $0, (%A)
+
+end:
