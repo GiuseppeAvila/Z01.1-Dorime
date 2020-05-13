@@ -5,4 +5,26 @@
 
 ; Copia o valor de RAM[1] para RAM[0] deixando o valor sempre positivo.
 
- 
+leaw $R1, %A
+negw (%A)
+movw (%A), %D
+leaw $R2, %A
+movw %D, (%A)
+
+leaw $end, %A
+jg
+nop
+
+leaw $R2, %A
+negw (%A)
+movw (%A), %D
+leaw $R0, %A
+movw %D, (%A)
+
+leaw $end, %A
+
+end:
+leaw $R2, %A
+movw (%A), %D
+leaw $R0, %A
+movw %D, (%A)

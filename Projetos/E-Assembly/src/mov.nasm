@@ -19,12 +19,8 @@
 
 leaw $R0, %A
 movw (%A), %D
-leaw $R1, %A
-movw %D, (%A)
-
-; -----------------------
-; RAM[1] = RAM[0]
-; -----------------------
+leaw $R4, %A
+movw %D, (%A) ; <--- armazena valor de RAM[0] em RAM[4]
 
 leaw $R1, %A
 movw (%A), %D
@@ -32,10 +28,18 @@ leaw $R0, %A
 movw %D, (%A)
 
 ; -----------------------
+; RAM[1] = RAM[0]
+; -----------------------
+
+leaw $R4, %A ; <--- lê antigo valor de RAM[0]
+movw (%A), %D ; <--- armazena em %D
+leaw $R1, %A
+movw %D, (%A) ; <--- e guarda em RAM[1]
+
+; -----------------------
 ; RAM[3] = 1
 ; -----------------------
 
-leaw $1, %A
-movw %A, %D
+movw $1, %D
 leaw $R3, %A
 movw %D, (%A)
