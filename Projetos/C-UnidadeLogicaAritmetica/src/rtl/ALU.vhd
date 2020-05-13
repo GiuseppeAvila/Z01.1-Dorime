@@ -1,7 +1,6 @@
 -- Elementos de Sistemas
 -- by Luciano Soares
--- ALU.vhd
--- teste git
+-- ALU_a.vhd
 
 -- Unidade Lógica Aritmética (ULA)
 -- Recebe dois valores de 16bits e
@@ -29,24 +28,21 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity ALU is
 	port (
-			x,y:   in STD_LOGIC_VECTOR(15 downto 0); -- entradas de dados da ALU
+			x,y:   in STD_LOGIC_VECTOR(15 downto 0); -- entradas de dados da ALU_a
 			zx:    in STD_LOGIC;                     -- zera a entrada x
 			nx:    in STD_LOGIC;                     -- inverte a entrada x
 			zy:    in STD_LOGIC;                     -- zera a entrada y
 			ny:    in STD_LOGIC;                     -- inverte a entrada y
-			f:     in STD_LOGIC_VECTOR(1 downto 0);  -- se 00 calcula x & y, se 01 x + y, se 10 x xor y, se 11 OPEN
+			f:     in STD_LOGIC;                     -- se 0 calcula x & y, senão x + y
 			no:    in STD_LOGIC;                     -- inverte o valor da saída
 			zr:    out STD_LOGIC;                    -- setado se saída igual a zero
 			ng:    out STD_LOGIC;                    -- setado se saída é negativa
-			saida: out STD_LOGIC_VECTOR(15 downto 0) -- saída de dados da ALU
+			saida: out STD_LOGIC_VECTOR(15 downto 0) -- saída de dados da ALU_a
 	);
 end entity;
 
-architecture  rtl OF alu is
-  -- Aqui declaramos sinais (fios auxiliares)
-  -- e componentes (outros módulos) que serao
-  -- utilizados nesse modulo.
-  
+architecture  rtl OF alu IS
+
 	component zerador16 IS
 		port(z   : in STD_LOGIC;
 			 a   : in STD_LOGIC_VECTOR(15 downto 0);
@@ -65,8 +61,7 @@ architecture  rtl OF alu is
 		port(
 			a   :  in STD_LOGIC_VECTOR(15 downto 0);
 			b   :  in STD_LOGIC_VECTOR(15 downto 0);
-			q   : out STD_LOGIC_VECTOR(15 downto 0);
-			carryout : out std_logic
+			q   : out STD_LOGIC_VECTOR(15 downto 0)
 		);
 	end component;
 
@@ -83,50 +78,30 @@ architecture  rtl OF alu is
 			a   : in STD_LOGIC_VECTOR(15 downto 0);
 			zr   : out STD_LOGIC;
 			ng   : out STD_LOGIC
-    );
+		);
 	end component;
 
-	component Mux4Way16 is
+	component Mux16 is
 		port (
 			a:   in  STD_LOGIC_VECTOR(15 downto 0);
 			b:   in  STD_LOGIC_VECTOR(15 downto 0);
-			c:   in  STD_LOGIC_VECTOR(15 downto 0);
-			d:   in  STD_LOGIC_VECTOR(15 downto 0);
-			sel: in  STD_LOGIC_VECTOR(1 downto 0);
+			sel: in  STD_LOGIC;
 			q:   out STD_LOGIC_VECTOR(15 downto 0)
 		);
 	end component;
 
-	component xor16 is
-		port (
-			a:   in  STD_LOGIC_VECTOR(15 downto 0);
-			b:   in  STD_LOGIC_VECTOR(15 downto 0);
-			q:   out STD_LOGIC_VECTOR(15 downto 0)
-		);
-	end component;
-
-   SIGNAL zxout,zyout,nxout,nyout,andout,adderout,xorout,muxout,precomp,dmuxout, carrout: std_logic_vector(15 downto 0);
+   SIGNAL zxout,zyout,nxout,nyout,andout,adderout,muxout,precomp: std_logic_vector(15 downto 0);
 
 begin
-  -- Implementação vem aqui!
-  
-  u1 : zerador16 port map (z => zx, a => x, y => zxout);
-  u2 : zerador16 port map (z => zy, a => y, y => zyout);
-  
-  u3 : inversor16 port map (z => nx, a => zxout, y => nxout);
-  u4 : inversor16 port map (z => ny, a => zyout, y => nyout);
-  
-  u5 : And16 port map (a => nxout, b => nyout, q => andout);
-  u6 : Add16 port map (a => nxout, b => nyout, q => adderout);
-  
-  u7 : Mux4Way16 port map (a => andout, b => adderout, c => xorout, d => dmuxout, sel => f, q => muxout);
-  
-  u8 : inversor16 port map (z => no, a => muxout, y => precomp);
-  
-  saida <= precomp;
-  
-  u9 : comparador16 port map (a => precomp, zr => zr, ng => ng);
-
-  u10 : xor16 port map (a => nxout, b => nyout, q => xorout);
+	u0 : zerador16 port map (zx, x, zxout); --zerador x
+	u1 : inversor16 port map (nx, zxout, nxout); --negador x
+	u2 : zerador16 port map (zy, y, zyout); --zerador y
+	u3 : inversor16 port map (ny, zyout, nyout); --negador y
+	u4 : Add16 port map (nxout, nyout, adderout); --adder x+y
+	u5 : And16 port map (nxout, nyout, andout); --and x & y
+	u6 : Mux16 port map (andout, adderout, f, muxout); --mux escolhe a saida do adder ou do and
+	u7 : inversor16 port map (no, muxout, precomp); --nega a saida do mux
+	u8 : comparador16 port map (precomp, zr, ng);
+	saida <= precomp;
 
 end architecture;
