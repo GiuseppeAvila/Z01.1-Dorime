@@ -19,3 +19,81 @@
 ; RAM[7]:  1  | RAM[7]:  1 |
 ; RAM[8]:  4  | RAM[8]:  4 -
 ; ------------------------------------
+
+; guardando tamanho do vetor em r3
+leaw $4, %A
+movw (%A), %D
+leaw $3, %A
+movw %D, (%A)
+leaw $end0, %A
+je 
+nop
+
+; guardando posição inicial em r2
+leaw $5, %A
+movw %A, %D
+leaw $2, %A
+movw %D, (%A)
+
+; iteração
+loop:
+leaw $2, %A
+movw (%A), %D
+addw $1, %D, (%A)
+movw %D, %A
+movw (%A), %D
+leaw $1, %A
+addw (%A), %D, %D
+movw %D, (%A)
+leaw $4, %A
+subw (%A), $1, %D
+movw %D, (%A)
+leaw $loop, %A
+jg
+nop
+
+; inicio primeira iteração de subtração
+leaw $3, %A
+movw (%A), %D
+leaw $1, %A
+subw (%A), %D, %D
+leaw $2, %A 
+movw %D, (%A)
+
+; incremento
+leaw $0, %A
+addw $1, (%A), %D 
+movw %D, (%A) 
+
+leaw $end, %A 
+jl
+nop 
+
+while: 
+leaw $3, %A
+movw (%A), %D
+leaw $2, %A
+subw (%A), %D, %D 
+movw %D, (%A) 
+
+; if 
+leaw $end, %A 
+jl
+nop
+
+; else 
+leaw $0, %A
+addw $1, (%A), %D
+movw %D, (%A) 
+leaw $while, %A 
+jmp 
+nop
+
+end0:
+leaw $0, %A
+movw $0, (%A)
+leaw $1, %A
+movw $0, (%A)
+
+    
+end: 
