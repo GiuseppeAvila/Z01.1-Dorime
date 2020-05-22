@@ -28,14 +28,14 @@ entity MemoryIO is
 
         -- I/Os
         SW  : in std_logic_vector(9 downto 0);
-        LED : OUT std_logic_vector(9 downto 0);
+        LED : OUT std_logic_vector(9 downto 0)
 		  
-		  SEL : in std_logic_vector(1 downto 0);
-		  A   : in  STD_LOGIC_VECTOR (15 downto 0);     -- inputs
-        B   : in  STD_LOGIC_VECTOR (15 downto 0);     -- inputs
-		  C   : in  STD_LOGIC_VECTOR (15 downto 0);     -- inputs
-		  D   : in  STD_LOGIC_VECTOR (15 downto 0);     -- inputs
-		  Q   : out STD_LOGIC_VECTOR (15 downto 0)    -- output
+		  --SEL : in std_logic_vector(1 downto 0);
+		  --A   : in  STD_LOGIC_VECTOR (15 downto 0);     -- inputs
+        --B   : in  STD_LOGIC_VECTOR (15 downto 0);     -- inputs
+		  --C   : in  STD_LOGIC_VECTOR (15 downto 0);     -- inputs
+		  --D   : in  STD_LOGIC_VECTOR (15 downto 0);     -- inputs
+		  --Q   : out STD_LOGIC_VECTOR (15 downto 0)    -- output
 
 );
 end entity;
@@ -98,6 +98,7 @@ ARCHITECTURE logic OF MemoryIO IS
   SIGNAL LOAD_RAM         : STD_LOGIC := '0';
   SIGNAL LOAD_DISPLAY     : STD_LOGIC := '0';
   SIGNAL LOAD_LED         : STD_LOGIC := '0';
+  SIGNAL SEL_2              :std_logic_vector(1 downto 0);
 
   SIGNAL OUTPUT_RAM       : STD_LOGIC_VECTOR(15 downto 0);
 	SIGNAL SW16 : STD_LOGIC_VECTOR(15 downto 0);
@@ -146,12 +147,12 @@ BEGIN
 	  
 	 mux: Mux4Way16
 	   port map(
-		  sel => SEL,
+		  sel => SEL_2,
 		  a => SW16,
 		  b => OUTPUT_RAM,
 		  c => "0000000000000000",
 		  d => "0000000000000000",
-		  q => OUTPUT_RAM		  
+		  q => OUTPUT		  
 		);
 
     ----------------------------------------
@@ -165,15 +166,16 @@ BEGIN
     -- SW e LED                           --
     ----------------------------------------
     -- Compatibilidade de tamanho
-	 LOAD_RAM <= '1' WHEN (ADDRESS >= "0000000000000000") and (ADDRESS <= "11111111111111") else
+	 LOAD_RAM <= LOAD WHEN (ADDRESS(14 downto 0)>= "000000000000000") and (ADDRESS(14 downto 0) <= "011111111111111") else
 				'0';
 	 
+	 SEL_2 <= "00" when (ADDRESS = "101001011000001") else "01";
 	 
 	
-	 LOAD_DISPLAY <= '1' WHEN (ADDRESS >= "100000000000000") and (ADDRESS <= "101001010111111") else
+	 LOAD_DISPLAY <= LOAD WHEN (ADDRESS >= "100000000000000") and (ADDRESS <= "101001010111111") else
 				'0';
 	 
-	 LOAD_LED <= '1' when (ADDRESS = "101001011000000") else
+	 LOAD_LED <= LOAD when (ADDRESS = "101001011000000") else
 				'0';
 				
 	
