@@ -41,6 +41,7 @@ begin
  
  
  muxALUI_A  <= '0' when instruction(17) = '1' else '1';
+ muxAM <= '1' when instruction(17) = '1' and instruction(13) ='1' else '0';
  zx <= '1' when instruction(17) = '1' and instruction(12) = '1' else '0';
  nx  <= '1' when instruction(17) = '1' and instruction(11) = '1' else '0';
  zy  <= '1' when instruction(17) = '1' and instruction(10) = '1' else '0';
