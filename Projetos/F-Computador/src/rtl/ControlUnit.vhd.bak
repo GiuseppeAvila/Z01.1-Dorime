@@ -34,9 +34,9 @@ begin
  loadM <= instruction(17) and instruction(5);
  loadA <= not instruction(17);
  
- --((instruction(0) or instruction(1)) or instruction(2))
  
- loadPC <= '1' when instruction(17) = '1' and ((instruction(0)='1' or instruction(1)='1') or instruction(2)='1') and zr='0' and ng='0' else '0';
+ 
+ loadPC <= '1' when instruction(17) and ((instruction(0) or instruction(1)) or instruction(2)) and not zr and not ng else '0';
  
  
  

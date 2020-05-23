@@ -102,11 +102,11 @@ architecture arch of CPU is
 
 begin
 
-  controlunit: ControlUnit port map(
+  Ctrl_U: ControlUnit port map(
 					instruction, c_zr, c_ng, c_muxALUI_A, c_muxAM, c_zx, c_nx, c_zy, c_ny, c_f, c_no, 
 					c_loadA, c_loadD, writeM, c_loadPC);
   
-  muxALUI_A: Mux16 port map (s_ALUout, instruction, c_muxALUI_A, s_muxALUI_Aout);
+  muxALUI_A: Mux16 port map (s_ALUout, instruction(15 downto 0), c_muxALUI_A, s_muxALUI_Aout);
   
   register_A: Register16 port map(clock, s_muxALUI_Aout, c_loadA, s_regAout);
   
@@ -116,13 +116,13 @@ begin
   
   register_D: Register16 port map(clock, s_ALUout, c_loadD, s_regDout);
   
-  ALU: ALU port map (s_regDout, s_muxAM_out, c_zx, c_nx, c_zy, c_ny, c_f, c_no, c_zr, c_ng, s_ALUout);
+  ula: ALU port map (s_regDout, s_muxAM_out, c_zx, c_nx, c_zy, c_ny, c_f, c_no, c_zr, c_ng, s_ALUout);
 
   outM <= s_ALUout;
     
-  addressM <= s_regAout;
+  addressM <= s_regAout(14 downto 0);
   
-  pcout <= s_pcout;
+  pcout <= s_pcout(14 downto 0);
 
 
 
