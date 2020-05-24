@@ -139,65 +139,39 @@ BEGIN
         input => INPUT,
         load  => LOAD_LED,
         output => LED16
-        );
-		  
-		  -- Compatibilidade de tamanho
-    SW16(15 downto 10) <= (others => '0');
-    SW16( 9 DOWNTO  0) <= SW;
-	  
-	 mux: Mux4Way16
-	   port map(
-		  sel => SEL_2,
-		  a => SW16,
-		  b => OUTPUT_RAM,
-		  c => "0000000000000000",
-		  d => "0000000000000000",
-		  q => OUTPUT		  
-		);
-
+        );  
+    
     ----------------------------------------
     -- Controla LOAD do display e da ram e LED ! --
     ----------------------------------------
-    --LOAD_DISPLAY <= ??????; 
-    --LOAD_RAM     <= ??????; 
-    --LOAD_LED     <= ??????; 
-
+    LOAD_DISPLAY <= LOAD WHEN (ADDRESS >= "100000000000000") and (ADDRESS <= "101001010111111") else '0'; 
+    LOAD_RAM     <= LOAD WHEN (ADDRESS(14 downto 0)>= "000000000000000") and (ADDRESS(14 downto 0) <= "011111111111111") else '0'; 
+    LOAD_LED     <= LOAD when (ADDRESS = "101001011000000") else '0';
+    
     ----------------------------------------
     -- SW e LED                           --
     ----------------------------------------
     -- Compatibilidade de tamanho
-	 LOAD_RAM <= LOAD WHEN (ADDRESS(14 downto 0)>= "000000000000000") and (ADDRESS(14 downto 0) <= "011111111111111") else
-				'0';
-	 
-	 SEL_2 <= "00" when (ADDRESS = "101001011000001") else "01";
-	 
-	
-	 LOAD_DISPLAY <= LOAD WHEN (ADDRESS >= "100000000000000") and (ADDRESS <= "101001010111111") else
-				'0';
-	 
-	 LOAD_LED <= LOAD when (ADDRESS = "101001011000000") else
-				'0';
-				
-	
-	 
-	 
-	 
-	 
-	 
-    LED <= LED16(9 downto 0);
-
     
-	 
-	-- with sel select
-	--	  q <= SW when "00",
-	--	  b when "01"
-		  
-
+    SW16(15 downto 10) <= (others => '0');
+    SW16( 9 DOWNTO  0) <= SW;
+    
+    LED <= LED16(9 downto 0);
+    
+	  
     ----------------------------------------
     -- SAIDA do memory I/O                --
     ----------------------------------------
-    -- precisar ser: RAM ou SW16
-    -- OUTPUT <= ?????? ;
-
+    mux: Mux4Way16
+     port map(
+       sel => SEL_2,
+       a => SW16,
+       b => OUTPUT_RAM,
+       c => "0000000000000000",
+       d => "0000000000000000",
+       q => OUTPUT		  
+       );
+    
+    SEL_2 <= "00" when (ADDRESS = "101001011000001") else "01";
 
 END logic;
