@@ -21,7 +21,7 @@ entity ControlUnit is
                                                                      -- reg. A e Mem. RAM para ALU
                                                                      -- A  e Mem. RAM para ALU
 		zx, nx, zy, ny, f, no       : out STD_LOGIC;                     -- sinais de controle da ALU
-		loadA, loadD, loadM, loadPC : out STD_LOGIC               -- sinais de load do reg. A,
+		loadA, loadD, loadM, loadPC : out STD_LOGIC                      -- sinais de load do reg. A,
                                                                      -- reg. D, Mem. RAM e Program Counter
     );
 end entity;
@@ -32,22 +32,19 @@ begin
 
  loadD <= instruction(17) and instruction(4);
  loadM <= instruction(17) and instruction(5);
- loadA <= not instruction(17);
+ loadA <= not instruction(17) or instruction(3);
  
- --((instruction(0) or instruction(1)) or instruction(2))
  
  loadPC <= '1' when instruction(17) = '1' and ((instruction(0)='1' or instruction(1)='1') or instruction(2)='1') and zr='0' and ng='0' else '0';
  
- 
- 
- muxALUI_A  <= '0' when instruction(17) = '1' else '1';
- muxAM <= '1' when instruction(17) = '1' and instruction(13) ='1' else '0';
- zx <= '1' when instruction(17) = '1' and instruction(12) = '1' else '0';
- nx  <= '1' when instruction(17) = '1' and instruction(11) = '1' else '0';
- zy  <= '1' when instruction(17) = '1' and instruction(10) = '1' else '0';
- ny  <= '1' when instruction(17) = '1' and instruction(9) = '1' else '0';
- f  <= '1' when instruction(17) = '1' and instruction(8) = '1' else '0';
- no  <= '1' when instruction(17) = '1' and instruction(7) = '1' else '0'; 
- 
 
+ muxALUI_A  <= '0' when instruction(17) = '1' else '1';
+ muxAM      <= '1' when instruction(17) = '1' and instruction(13) ='1' else '0';
+ zx         <= '1' when instruction(17) = '1' and instruction(12) = '1' else '0';
+ nx         <= '1' when instruction(17) = '1' and instruction(11) = '1' else '0';
+ zy         <= '1' when instruction(17) = '1' and instruction(10) = '1' else '0';
+ ny         <= '1' when instruction(17) = '1' and instruction(9) = '1' else '0';
+ f          <= '1' when instruction(17) = '1' and instruction(8) = '1' else '0';
+ no         <= '1' when instruction(17) = '1' and instruction(7) = '1' else '0'; 
+ 
 end architecture;
