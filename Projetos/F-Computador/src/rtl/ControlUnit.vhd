@@ -33,10 +33,20 @@ begin
  loadD <= instruction(17) and instruction(4);
  loadM <= instruction(17) and instruction(5);
  loadA <= not instruction(17) or instruction(3);
- 
- 
- loadPC <= '1' when instruction(17) = '1' and ((instruction(0)='1' or instruction(1)='1') or instruction(2)='1') and zr='0' and ng='0' else '0';
- 
+
+
+ --loadPC <= '1' when instruction(17) = '1' and ((instruction(0)='1' or instruction(1)='1') or instruction(2)='1') and zr='0' and ng='0' else '0';
+
+ -- zr ZERO
+ -- ng NEGATIVO
+ loadPC <= '1' when instruction(17) = '1' and instruction(0) = '1' and zr = '0' and ng = '0' else --jg
+           '1' when instruction(17) = '1' and instruction(1) = '1' and zr = '1' and ng = '0' else --je
+           '1' when instruction(17) = '1' and instruction(2) = '1' and zr = '0' and ng = '1' else --jl
+           '1' when instruction(17) = '1' and instruction(0) = '1' and instruction(1) = '1' and ng = '0' else --jge
+           '1' when instruction(17) = '1' and instruction(2) = '1' and instruction(1) = '1' and ng = '1' else --jle
+           '1' when instruction(17) = '1' and instruction(2) = '1' and instruction(0) = '1' and zr = '0' else --jne
+           '1' when instruction(17) = '1' and instruction(2) = '1' and instruction(1) = '1' and instruction(0)= '1' else --jne
+           '0';
 
  muxALUI_A  <= '0' when instruction(17) = '1' else '1';
  muxAM      <= '1' when instruction(17) = '1' and instruction(13) ='1' else '0';
@@ -45,6 +55,6 @@ begin
  zy         <= '1' when instruction(17) = '1' and instruction(10) = '1' else '0';
  ny         <= '1' when instruction(17) = '1' and instruction(9) = '1' else '0';
  f          <= '1' when instruction(17) = '1' and instruction(8) = '1' else '0';
- no         <= '1' when instruction(17) = '1' and instruction(7) = '1' else '0'; 
- 
+ no         <= '1' when instruction(17) = '1' and instruction(7) = '1' else '0';
+
 end architecture;
