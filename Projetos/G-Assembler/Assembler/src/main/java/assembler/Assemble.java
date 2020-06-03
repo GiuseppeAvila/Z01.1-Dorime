@@ -3,7 +3,7 @@
  * Arquivo: Assemble.java
  * Created by Luciano <lpsoares@insper.edu.br>
  * Date: 04/02/2017
- *
+ * <p>
  * 2018 @ Rafael Corsi
  */
 
@@ -15,10 +15,10 @@ import java.io.*;
  * Faz a geração do código gerenciando os demais módulos
  */
 public class Assemble {
-    private String inputFile;              // arquivo de entrada nasm
     File hackFile = null;                  // arquivo de saída hack
-    private PrintWriter outHACK = null;    // grava saida do código de máquina em Hack
     boolean debug;                         // flag que especifica se mensagens de debug são impressas
+    private String inputFile;              // arquivo de entrada nasm
+    private PrintWriter outHACK = null;    // grava saida do código de máquina em Hack
     private SymbolTable table;             // tabela de símbolos (variáveis e marcadores)
 
     /*
@@ -30,19 +30,20 @@ public class Assemble {
      */
     public Assemble(String inFile, String outFileHack, boolean debug) throws IOException {
         this.debug = debug;
-        inputFile  = inFile;
-        hackFile   = new File(outFileHack);                      // Cria arquivo de saída .hack
-        outHACK    = new PrintWriter(new FileWriter(hackFile));  // Cria saída do print para
-                                                                 // o arquivo hackfile
-        table      = new SymbolTable();                          // Cria e inicializa a tabela de simbolos
+        inputFile = inFile;
+        hackFile = new File(outFileHack);                      // Cria arquivo de saída .hack
+        outHACK = new PrintWriter(new FileWriter(hackFile));  // Cria saída do print para
+        // o arquivo hackfile
+        table = new SymbolTable();                          // Cria e inicializa a tabela de simbolos
     }
 
     /**
      * primeiro passo para a construção da tabela de símbolos de marcadores (labels)
      * varre o código em busca de novos Labels e Endereços de memórias (variáveis)
      * e atualiza a tabela de símbolos com os endereços (table).
-     *
+     * <p>
      * Dependencia : Parser, SymbolTable
+     *
      * @return
      */
     public SymbolTable fillSymbolTable() throws FileNotFoundException, IOException {
@@ -50,15 +51,19 @@ public class Assemble {
         // primeira passada pelo código deve buscar os labels
         // LOOP:
         // END:
+
         Parser parser = new Parser(inputFile);
         int romAddress = 0;
-        while (parser.advance()){
-            if (parser.commandType(parser.command()) == Parser.CommandType.L_COMMAND) {
-                String label = parser.label(parser.command());
-                /* TODO: implementar */
-                // deve verificar se tal label já existe na tabela,
-                // se não, deve inserir. Caso contrário, ignorar.
+        while (parser.advance()) if (parser.commandType(parser.command()) == Parser.CommandType.L_COMMAND) {
+            String label = parser.label(parser.command());
+
+            if (this.table.contains(label) == false) {
+
+                this.table.addEntry(label, romAddress);
+
             }
+
+        } else {
             romAddress++;
         }
         parser.close();
@@ -70,31 +75,31 @@ public class Assemble {
         // começando no RAM[15] e seguindo em diante.
         parser = new Parser(inputFile);
         int ramAddress = 15;
-        while (parser.advance()){
-            if (parser.commandType(parser.command()) == Parser.CommandType.A_COMMAND) {
-                String symbol = parser.symbol(parser.command());
-                if (Character.isDigit(symbol.charAt(0))){
-                    /* TODO: implementar */
-                    // deve verificar se tal símbolo já existe na tabela,
-                    // se não, deve inserir associando um endereço de
-                    // memória RAM a ele.
+        while (parser.advance()) if (parser.commandType(parser.command()) == Parser.CommandType.A_COMMAND) {
+            String symbol = parser.symbol(parser.command());
+            if (Character.isDigit(symbol.charAt(0))) {
+
+                if (this.table.contains(symbol) == false) {
+                    this.table.addEntry(symbol, ramAddress);
                 }
             }
         }
         parser.close();
-        return table;
+        return this.table;
     }
 
     /**
      * Segundo passo para a geração do código de máquina
      * Varre o código em busca de instruções do tipo A, C
      * gerando a linguagem de máquina a partir do parse das instruções.
-     *
+     * <p>
      * Dependencias : Parser, Code
      */
-    public void generateMachineCode() throws FileNotFoundException, IOException{
+    public void generateMachineCode() throws FileNotFoundException, IOException {
         Parser parser = new Parser(inputFile);  // abre o arquivo e aponta para o começo
-        String instruction  = "";
+        String instruction = "";
+        String comando;
+        String letra;
 
         /**
          * Aqui devemos varrer o código nasm linha a linha
@@ -102,21 +107,42 @@ public class Assemble {
          * de instrução válida do nasm
          * seguindo o instruction set
          */
-        while (parser.advance()){
-            switch (parser.commandType(parser.command())){
-                /* TODO: implementar */
+        while (parser.advance()) {
+            comando = parser.command();
+            switch (parser.commandType(comando)) {
+
                 case C_COMMAND:
-                break;
-            case A_COMMAND:
-                break;
-            default:
-                continue;
+
+                    String[] lista = parser.instruction(comando);
+                    instruction = "10" + Code.comp(lista) + Code.dest(lista) + Code.jump(lista);
+
+                    break;
+                case A_COMMAND:
+
+                    String caractereRomano = parser.symbol(comando);
+
+                    try {
+                        int teste = Integer.valueOf(caractereRomano);
+                        letra = caractereRomano;
+
+                    } catch (Exception e) {
+
+                        letra = table.getAddress(caractereRomano).toString();
+
+                    }
+                    instruction = "00" + Code.toBinary(letra);
+
+                    break;
+                default:
+                    continue;
             }
             // Escreve no arquivo .hack a instrução
-            if(outHACK!=null) {
-                outHACK.println(instruction);
-            }
+            //if(outHACK!=null) {
+            outHACK.println(instruction);
+            //}
             instruction = null;
+            comando = null;
+            letra = null;
         }
     }
 
@@ -124,7 +150,7 @@ public class Assemble {
      * Fecha arquivo de escrita
      */
     public void close() throws IOException {
-        if(outHACK!=null) {
+        if (outHACK != null) {
             outHACK.close();
         }
     }
@@ -133,11 +159,11 @@ public class Assemble {
      * Remove o arquivo de .hack se algum erro for encontrado
      */
     public void delete() {
-        try{
-            if(hackFile!=null) {
+        try {
+            if (hackFile != null) {
                 hackFile.delete();
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

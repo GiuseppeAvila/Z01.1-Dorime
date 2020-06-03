@@ -24,8 +24,9 @@ public class SymbolTable {
 
     /**
      * Insere uma entrada de um símbolo com seu endereço numérico na tabela de símbolos.
-     * @param  symbol símbolo a ser armazenado na tabela de símbolos.
-     * @param  address símbolo a ser armazenado na tabela de símbolos.
+     *
+     * @param symbol  símbolo a ser armazenado na tabela de símbolos.
+     * @param address símbolo a ser armazenado na tabela de símbolos.
      */
     public void addEntry(String symbol, int address) {
         symbolTable.put(symbol, address);
@@ -33,7 +34,8 @@ public class SymbolTable {
 
     /**
      * Confere se o símbolo informado já foi inserido na tabela de símbolos.
-     * @param  symbol símbolo a ser procurado na tabela de símbolos.
+     *
+     * @param symbol símbolo a ser procurado na tabela de símbolos.
      * @return Verdadeiro se símbolo está na tabela de símbolos, Falso se não está na tabela de símbolos.
      */
     public Boolean contains(String symbol) {
@@ -42,7 +44,8 @@ public class SymbolTable {
 
     /**
      * Retorna o valor númerico associado a um símbolo já inserido na tabela de símbolos.
-     * @param  symbol símbolo a ser procurado na tabela de símbolos.
+     *
+     * @param symbol símbolo a ser procurado na tabela de símbolos.
      * @return valor numérico associado ao símbolo procurado.
      */
     public Integer getAddress(String symbol) {
@@ -50,17 +53,17 @@ public class SymbolTable {
     }
 
     /**
-     *  Inicializa a tabela de simbolos com os simbolos pre definidos
-     *  exemplo: R0, R1, ...
-     *  SP, LCL, ARG, THIS, THAT
-     *  SCREEN, KBD, ..
+     * Inicializa a tabela de simbolos com os simbolos pre definidos
+     * exemplo: R0, R1, ...
+     * SP, LCL, ARG, THIS, THAT
+     * SCREEN, KBD, ..
      */
     //
     public void initialize() {
         // Exemplo: Registradores Virtuais
 
         // ADICIONANDO TODAS ENTRADAS RX
-        for (int i = 0; i < 16; i++){
+        for (int i = 0; i < 16; i++) {
             this.addEntry("R" + i, i);
         }
 

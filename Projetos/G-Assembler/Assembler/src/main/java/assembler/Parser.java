@@ -18,21 +18,15 @@ import java.io.IOException;
 public class Parser {
 
     private final BufferedReader fileReader;
-    public String inputFile;		        // arquivo de leitura
-    public int lineNumber = 0;		     	// linha atual do arquivo (nao do codigo gerado)
+    public String inputFile;                // arquivo de leitura
+    public int lineNumber = 0;                // linha atual do arquivo (nao do codigo gerado)
     public String currentCommand = "";      // comando atual
-    public String currentLine;			    // linha de codigo atual
+    public String currentLine;                // linha de codigo atual
 
-
-    /** Enumerator para os tipos de comandos do Assembler. */
-    public enum CommandType {
-        A_COMMAND,      // comandos LEA, que armazenam no registrador A
-        C_COMMAND,      // comandos de calculos
-        L_COMMAND       // comandos de Label (símbolos)
-    }
 
     /**
      * Abre o arquivo de entrada NASM e se prepara para analisá-lo.
+     *
      * @param file arquivo NASM que será feito o parser.
      */
     public Parser(String file) throws FileNotFoundException {
@@ -50,11 +44,12 @@ public class Parser {
      * Carrega uma instrução e avança seu apontador interno para o próxima
      * linha do arquivo de entrada. Caso não haja mais linhas no arquivo de
      * entrada o método retorna "Falso", senão retorna "Verdadeiro".
+     *
      * @return Verdadeiro se ainda há instruções, Falso se as instruções terminaram.
      */
     public Boolean advance() {
         /* ja esta pronto */
-        while(true){
+        while (true) {
             try {
                 currentLine = fileReader.readLine();
             } catch (IOException e) {
@@ -72,6 +67,7 @@ public class Parser {
 
     /**
      * Retorna o comando "intrução" atual (sem o avanço)
+     *
      * @return a instrução atual para ser analilisada
      */
     public String command() {
@@ -81,19 +77,20 @@ public class Parser {
 
     /**
      * Retorna o tipo da instrução passada no argumento:
-     *  A_COMMAND para leaw, por exemplo leaw $1,%A
-     *  L_COMMAND para labels, por exemplo Xyz: , onde Xyz é um símbolo.
-     *  C_COMMAND para todos os outros comandos
-     * @param  command instrução a ser analisada.
+     * A_COMMAND para leaw, por exemplo leaw $1,%A
+     * L_COMMAND para labels, por exemplo Xyz: , onde Xyz é um símbolo.
+     * C_COMMAND para todos os outros comandos
+     *
+     * @param command instrução a ser analisada.
      * @return o tipo da instrução.
      */
     public CommandType commandType(String command) {
-        if (command.contains(":")){
+
+        if (command.contains(":")) {
             return CommandType.L_COMMAND;
-        } else if (command.contains("leaw")){
+        } else if (command.contains("leaw")) {
             return CommandType.A_COMMAND;
-        }
-        else {
+        } else {
             return CommandType.C_COMMAND;
         }
     }
@@ -101,34 +98,92 @@ public class Parser {
     /**
      * Retorna o símbolo ou valor numérico da instrução passada no argumento.
      * Deve ser chamado somente quando commandType() é A_COMMAND.
-     * @param  command instrução a ser analisada.
+     *
+     * @param command instrução a ser analisada.
      * @return somente o símbolo ou o valor número da instrução.
      */
     public String symbol(String command) {
-        /* TODO: implementar */
-    	return null;
+
+        if (commandType(command).equals(CommandType.A_COMMAND)) {
+            int startPos = command.indexOf('$');
+            int endPos = command.indexOf(',');
+            return command.substring(startPos + 1, endPos);
+        } else {
+            return null;
+        }
     }
 
     /**
      * Retorna o símbolo da instrução passada no argumento.
      * Deve ser chamado somente quando commandType() é L_COMMAND.
-     * @param  command instrução a ser analisada.
+     *
+     * @param command instrução a ser analisada.
      * @return o símbolo da instrução (sem os dois pontos).
      */
     public String label(String command) {
-        /* TODO: implementar */
-    	return null;
+
+        if (commandType(command).equals(CommandType.L_COMMAND)) {
+            return command.substring(0, command.indexOf(':'));
+        } else return null;
     }
 
     /**
      * Separa os mnemônicos da instrução fornecida em tokens em um vetor de Strings.
      * Deve ser chamado somente quando CommandType () é C_COMMAND.
-     * @param  command instrução a ser analisada.
+     *
+     * @param command instrução a ser analisada.
      * @return um vetor de string contento os tokens da instrução (as partes do comando).
      */
     public String[] instruction(String command) {
-        /* TODO: implementar */
-    	return null;
+
+        try {
+            command = command.replace("  ", " ");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            command = command.replace("   ", " ");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            command = command.replace("    ", " ");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            command = command.replace("     ", " ");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            command = command.replace(" ", ";");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            command = command.replace(",", ";");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            command = command.replace(";;", ";");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String[] instruction = command.split(";");
+
+        return instruction;
+    }
+
+    /**
+     * Enumerator para os tipos de comandos do Assembler.
+     */
+    public enum CommandType {
+        A_COMMAND,      // comandos LEA, que armazenam no registrador A
+        C_COMMAND,      // comandos de calculos
+        L_COMMAND       // comandos de Label (símbolos)
     }
 
 
