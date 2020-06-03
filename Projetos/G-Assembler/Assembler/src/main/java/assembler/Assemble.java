@@ -137,9 +137,9 @@ public class Assemble {
                     continue;
             }
             // Escreve no arquivo .hack a instrução
-            //if(outHACK!=null) {
-            outHACK.println(instruction);
-            //}
+            if(outHACK!=null) {
+                outHACK.println(instruction);
+            }
             instruction = null;
             comando = null;
             letra = null;
