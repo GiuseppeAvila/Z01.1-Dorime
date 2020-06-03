@@ -88,6 +88,14 @@ public class Assemble {
         return this.table;
     }
 
+    public boolean valorNumerico(String frase) {
+        if (frase != null && frase.matches("[-+]?\\d*\\.?\\d+")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Segundo passo para a geração do código de máquina
      * Varre o código em busca de instruções do tipo A, C
@@ -118,20 +126,13 @@ public class Assemble {
 
                     break;
                 case A_COMMAND:
+                    if (!valorNumerico(parser.symbol(parser.command()))){
 
-                    String caractereRomano = parser.symbol(comando);
-
-                    try {
-                        int teste = Integer.valueOf(caractereRomano);
-                        letra = caractereRomano;
-
-                    } catch (Exception e) {
-
-                        letra = table.getAddress(caractereRomano).toString();
-
+                        instruction = "00" + Code.toBinary(table.getAddress(parser.symbol(parser.command())).toString());
                     }
-                    instruction = "00" + Code.toBinary(letra);
-
+                    else {
+                        instruction = "00" + Code.toBinary(parser.symbol(parser.command()));
+                    }
                     break;
                 default:
                     continue;
